@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carte du voyage - Irla guinee</title>
+  <style>
+    body { margin: 0; padding: 0; font-family: Arial, sans-serif; }
+    #map { height: 100vh; width: 100%; }
+    .info-window { max-width: 250px; font-family: Arial, sans-serif; }
+    .info-window img { width: 100%; height: auto; border-radius: 8px; margin-bottom: 10px; }
+    .info-window h3 { margin: 0 0 5px 0; font-size: 16px; color: #333; }
+    .info-window p { margin: 5px 0; font-size: 14px; color: #666; }
+    .info-window a { color: #1a73e8; text-decoration: none; }
+    .info-window a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  
+  <script>
+    function initMap() {
+      const center = { lat: 10.324060357142857, lng: -12.713608614285716 };
+      const map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 10,
+        center: center
+      });
+      
+      const markers = [{"lat":9.5090945,"lng":-13.7119312,"name":"Conakry","jour":1,"titre":"Arrivée à Conakry et Première Immersion","streetViewUrl":"https://maps.googleapis.com/maps/api/streetview?size=600x400&location=9.5090945,-13.7119312&key=AIzaSyB5WUNvRC9eOjHRLt92fs4hsp0Auje3aAI","streetViewLinkUrl":"https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=9.5090945,-13.7119312","aiImageUrl":"jour1.jpg"},{"lat":9.644161,"lng":-13.5460327,"name":"Îles de Loos (depuis Conakry)","jour":3,"titre":"Évasion Insulaire aux Îles de Loos","streetViewUrl":"https://maps.googleapis.com/maps/api/streetview?size=600x400&location=9.644161,-13.5460327&key=AIzaSyB5WUNvRC9eOjHRLt92fs4hsp0Auje3aAI","streetViewLinkUrl":"https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=9.644161,-13.5460327","aiImageUrl":"jour3.jpg"},{"lat":10.0406725,"lng":-12.8629885,"name":"Kindia","jour":4,"titre":"Route vers Kindia et les Chutes de la Mariée","streetViewUrl":"https://maps.googleapis.com/maps/api/streetview?size=600x400&location=10.0406725,-12.8629885&key=AIzaSyB5WUNvRC9eOjHRLt92fs4hsp0Auje3aAI","streetViewLinkUrl":"https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=10.0406725,-12.8629885","aiImageUrl":"jour4.jpg"},{"lat":10.6863833,"lng":-12.2509611,"name":"Dalaba","jour":5,"titre":"Ascension vers Dalaba, Cœur du Fouta Djallon","streetViewUrl":"https://maps.googleapis.com/maps/api/streetview?size=600x400&location=10.6863833,-12.2509611&key=AIzaSyB5WUNvRC9eOjHRLt92fs4hsp0Auje3aAI","streetViewLinkUrl":"https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=10.6863833,-12.2509611","aiImageUrl":"jour5.jpg"},{"lat":10.6863833,"lng":-12.2509611,"name":"Dalaba et environs","jour":7,"titre":"Immersion Culturelle Peulh","streetViewUrl":"https://maps.googleapis.com/maps/api/streetview?size=600x400&location=10.6863833,-12.2509611&key=AIzaSyB5WUNvRC9eOjHRLt92fs4hsp0Auje3aAI","streetViewLinkUrl":"https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=10.6863833,-12.2509611","aiImageUrl":"jour7.jpg"},{"lat":11.3232042,"lng":-12.2891314,"name":"Labé","jour":8,"titre":"Vers Labé, Capitale du Fouta","streetViewUrl":"https://maps.googleapis.com/maps/api/streetview?size=600x400&location=11.3232042,-12.2891314&key=AIzaSyB5WUNvRC9eOjHRLt92fs4hsp0Auje3aAI","streetViewLinkUrl":"https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=11.3232042,-12.2891314","aiImageUrl":"jour8.jpg"},{"lat":10.3785237,"lng":-12.0832543,"name":"Mamou","jour":9,"titre":"Descente vers Mamou, Ville Carrefour","streetViewUrl":"https://maps.googleapis.com/maps/api/streetview?size=600x400&location=10.3785237,-12.0832543&key=AIzaSyB5WUNvRC9eOjHRLt92fs4hsp0Auje3aAI","streetViewLinkUrl":"https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=10.3785237,-12.0832543","aiImageUrl":"jour9.jpg"}];
+      
+      markers.forEach((markerData) => {
+        const marker = new google.maps.Marker({
+          position: { lat: markerData.lat, lng: markerData.lng },
+          map: map,
+          title: markerData.name,
+          label: String(markerData.jour)
+        });
+        
+        const contentString = `
+          <div class="info-window">
+            <img src="${markerData.streetViewUrl}" alt="Street View de ${markerData.name}" />
+            <h3>Jour ${markerData.jour}</h3>
+            <p><strong>${markerData.name}</strong></p>
+            <p><a href="${markerData.streetViewLinkUrl}" target="_blank" rel="noopener noreferrer"><strong>${markerData.titre}</strong></a></p>
+          </div>
+        `;
+        
+        const infoWindow = new google.maps.InfoWindow({
+          content: contentString
+        });
+        
+        marker.addListener('click', () => {
+          infoWindow.open(map, marker);
+        });
+      });
+    }
+  </script>
+  
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5WUNvRC9eOjHRLt92fs4hsp0Auje3aAI&callback=initMap">
+  </script>
+</body>
+</html>
